@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/spawn",
-	"version": "1.10.0-ts.1",
+	"version": "1.10.0-ts.2",
 	"description": "A port of red-blox's Spawn package to the roblox-ts ecosystem.",
 	"main": "dist/init.lua",
 	"keywords": ["spawn", "thread", "recycle", "cache", "speed"],
@@ -27,8 +27,5 @@
 		"rbxts-transformer-services": "^1.1.1",
 		"roblox-ts": "^2.3.0",
 		"typescript": "=5.2.2"
-	},
-	"dependencies": {
-		"@rbxts/services": "^1.5.4"
 	}
 }

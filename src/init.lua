@@ -2,28 +2,30 @@
 --!optimize 2
 --!native
 
-local FreeThreads: { thread } = {}
+local FREE_THREADS: { thread } = {}
 
-local function RunCallback(Callback, Thread, ...)
-	Callback(...)
-	table.insert(FreeThreads, Thread)
+local function runCallback(callback, thread, ...)
+	callback(...)
+	table.insert(FREE_THREADS, thread)
 end
 
-local function Yielder()
+local function yielder()
 	while true do
-		RunCallback(coroutine.yield())
+		runCallback(coroutine.yield())
 	end
 end
 
-return function<T...>(Callback: (T...) -> (), ...: T...)
-	local Thread
-	if #FreeThreads > 0 then
-		Thread = FreeThreads[#FreeThreads]
-		FreeThreads[#FreeThreads] = nil
+return function<T...>(callback: (T...) -> (), ...: T...)
+	local thread
+	local freeThreadsAmount = #FREE_THREADS
+
+	if freeThreadsAmount > 0 then
+		thread = FREE_THREADS[freeThreadsAmount]
+		FREE_THREADS[freeThreadsAmount] = nil
 	else
-		Thread = coroutine.create(Yielder)
-		coroutine.resume(Thread)
+		thread = coroutine.create(yielder)
+		coroutine.resume(thread)
 	end
 
-	task.spawn(Thread, Callback, Thread, ...)
+	task.spawn(thread, callback, thread, ...)
 end

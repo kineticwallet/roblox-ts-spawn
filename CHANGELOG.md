@@ -1,4 +1,4 @@
-# Changelog of `@packages/spawn`
+# Changelog of `@rbxts/spawn`
 
 ## v1.0.0
 - improve spelling
